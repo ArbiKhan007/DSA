@@ -7,6 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -31,6 +32,8 @@ public class AppUser {
     String userType;
     @ManyToOne
     Company company;
+    @ManyToMany
+    List<Skill> skillSet;
     @CreationTimestamp
     LocalDateTime createdAt;
     @UpdateTimestamp
