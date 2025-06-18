@@ -1,0 +1,26 @@
+package com.naukri.central_api.utility;
+
+import com.naukri.central_api.dto.JobSeekerRegistrationDto;
+import com.naukri.central_api.models.AppUser;
+import com.naukri.central_api.models.Skill;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+
+@Component
+public class MappingUtility {
+
+    public AppUser mapJobSeekerDetailsToAppUser(JobSeekerRegistrationDto jobSeekerDto, List<Skill> skills){
+        AppUser appUser = new AppUser();
+        appUser.setUserType("JOB_SEEKER");
+        appUser.setName(jobSeekerDto.getName());
+        appUser.setEmail(jobSeekerDto.getEmail());
+        appUser.setPassword(jobSeekerDto.getPassword());
+        appUser.setPhoneNumber(jobSeekerDto.getPhoneNumber());
+        // appUser.setSkillSet(); For now we are not able to set List<Skill> to appUser
+        // Reason is from jobSeekerDto we are getting List<String> -> List<Skill>
+        appUser.setSkillSet(skills);
+        return appUser;
+    }
+
+}

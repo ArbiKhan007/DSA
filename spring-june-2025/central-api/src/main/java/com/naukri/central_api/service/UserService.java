@@ -1,0 +1,53 @@
+<package com.naukri.central_api.service;
+
+import com.naukri.central_api.dto.JobSeekerRegistrationDto;
+import com.naukri.central_api.models.AppUser;
+import com.naukri.central_api.models.Skill;
+import com.naukri.central_api.service.SkillService;
+import com.naukri.central_api.utility.MappingUtility;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class UserService {
+
+    SkillService skillService;
+    MappingUtility mappingUtility;
+
+    @Autowired
+    public UserService(SkillService skillService,
+                       MappingUtility mappingUtility){
+        this.skillService = skillService;
+        this.mappingUtility = mappingUtility;
+    }
+
+    public AppUser registerJobSeeker(JobSeekerRegistrationDto jobSeekerDto){
+        // FrontEnd -> Controller -> Service
+        // central api needs to use database api to save jobseekerr
+        // From our central api we need to think something such that we will be able to hit
+        // database-api user registration endpoint.
+
+        // 1. We need to map data of jobSeekerDto -> AppUser Model.
+        // Opt1. Write mapping logic here itself.
+        // Opt2. Write mapping logic in different class and call the mapping method of that class from here itself.
+
+        // We identified oneProblem that problem is to register user we need List<Skill>
+        // We are having List<String> we need to fecth all the Skill object from the database api
+
+        // We need to fetch List<Skill> from Db API for List<String>
+        List<String> skillNames = jobSeekerDto.getSkillSet();
+        List<Skill> skills = skillService.getAllSkills(skillNames);
+        AppUser jobSeeker = mappingUtility.mapJobSeekerDetailsToAppUser(jobSeekerDto, skills);
+        AppUser user  = this.saveUser(jobSeeker);
+        return user;
+    }
+
+
+    public AppUser saveUser(AppUser user){
+        // This method will be having logic to call SaveUser endpoint of appuser controller of dbApi
+    }
+
+}
