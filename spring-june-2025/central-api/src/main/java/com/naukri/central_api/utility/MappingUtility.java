@@ -1,11 +1,14 @@
 package com.naukri.central_api.utility;
 
+import com.naukri.central_api.dto.CompanyRegistrationDto;
 import com.naukri.central_api.dto.JobSeekerRegistrationDto;
 import com.naukri.central_api.models.AppUser;
+import com.naukri.central_api.models.Company;
 import com.naukri.central_api.models.Skill;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.concurrent.ConcurrentMap;
 
 @Component
 public class MappingUtility {
@@ -21,6 +24,28 @@ public class MappingUtility {
         // Reason is from jobSeekerDto we are getting List<String> -> List<Skill>
         appUser.setSkillSet(skills);
         return appUser;
+    }
+
+    public Company mapCompanyDtoToCompanyModel(CompanyRegistrationDto companyRegistrationDto){
+        Company company = new Company();
+        company.setCompanyName(companyRegistrationDto.getCompanyName());
+        company.setCompanySize(companyRegistrationDto.getCompanySize());
+        company.setIndustry(companyRegistrationDto.getIndustry());
+        company.setEmail(companyRegistrationDto.getEmail());
+        company.setWebsiteLink(companyRegistrationDto.getWebsiteLink());
+        company.setLinkedinLink(companyRegistrationDto.getLinkedinLink());
+        return company;
+    }
+
+    public AppUser mapCompanyDtoToAdmin(CompanyRegistrationDto companyRegistrationDto, Company company){
+        AppUser admin = new AppUser();
+        admin.setCompany(company);
+        admin.setName("Admin");
+        admin.setPassword(companyRegistrationDto.getPassword());
+        admin.setEmail(companyRegistrationDto.getEmail());
+        admin.setUserType("ADMIN");
+        admin.setPhoneNumber(companyRegistrationDto.getPhoneNumber());
+        return admin;
     }
 
 }

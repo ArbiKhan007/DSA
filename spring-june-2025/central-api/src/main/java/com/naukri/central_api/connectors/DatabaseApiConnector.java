@@ -1,7 +1,9 @@
 package com.naukri.central_api.connectors;
 
 import com.naukri.central_api.models.AppUser;
+import com.naukri.central_api.models.Company;
 import com.naukri.central_api.models.Skill;
+import com.naukri.central_api.service.CompanyService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.RequestEntity;
@@ -42,6 +44,15 @@ public class DatabaseApiConnector {
         RequestEntity request = RequestEntity.post(url).body(skill);
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Skill> response = restTemplate.exchange(url, HttpMethod.POST, request, Skill.class);
+        return response.getBody();
+    }
+
+
+    public Company callSaveCompanyEndpoint(Company company){
+        String url = baseUrl + "/company/save";
+        RequestEntity request = RequestEntity.post(url).body(company);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Company> response = restTemplate.exchange(url, HttpMethod.POST, request, Company.class);
         return response.getBody();
     }
 }

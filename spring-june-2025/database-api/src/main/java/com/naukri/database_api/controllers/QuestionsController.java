@@ -22,7 +22,7 @@ public class QuestionsController {
         this.questionsRepo = questionsRepo;
     }
 
-    @PostMapping("/save/answer")
+    @PostMapping("/save")
     public ResponseEntity<Questions> create(@RequestBody Questions questions){
         questionsRepo.save(questions);
         return new ResponseEntity<>(questions, HttpStatus.CREATED);

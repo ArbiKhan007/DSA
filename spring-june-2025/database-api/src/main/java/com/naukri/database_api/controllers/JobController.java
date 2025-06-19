@@ -22,7 +22,7 @@ public class JobController {
         this.jobRepo = jobRepo;
     }
 
-    @PostMapping("/save/answer")
+    @PostMapping("/save")
     public ResponseEntity<Job> create(@RequestBody Job job){
         jobRepo.save(job);
         return new ResponseEntity<>(job, HttpStatus.CREATED);
