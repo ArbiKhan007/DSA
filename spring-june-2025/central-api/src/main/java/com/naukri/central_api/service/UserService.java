@@ -49,6 +49,16 @@ public class UserService {
         return user;
     }
 
+    public boolean validateCredentials(String email, String password){
+        // We need to call database api to provide user object on the basis of email.
+        // So to call database api we should call database-api connector class.
+        AppUser user  = dbApiConnector.callGetUserByEmailEndpoint(email);
+        if(user.getPassword().equals(password)){
+            return true;
+        }
+        return false;
+    }
+
 
     AppUser saveUser(AppUser user){
         // This method will be having logic to call SaveUser endpoint of appuser controller of dbApi
