@@ -25,4 +25,8 @@ public class HospitalRepository {
     public int getTotalHospital(){
         return hospitalDB.size();
     }
+
+    public HashMap<Integer, Hospital> getHospitalMap(){
+        return hospitalDB;
+    }
 }
