@@ -2,6 +2,7 @@ package com.naukri.central_api.utility;
 
 import com.naukri.central_api.dto.CompanyRegistrationDto;
 import com.naukri.central_api.dto.JobSeekerRegistrationDto;
+import com.naukri.central_api.dto.RecruiterDetailsDto;
 import com.naukri.central_api.models.AppUser;
 import com.naukri.central_api.models.Company;
 import com.naukri.central_api.models.Skill;
@@ -46,6 +47,19 @@ public class MappingUtility {
         admin.setUserType("ADMIN");
         admin.setPhoneNumber(companyRegistrationDto.getPhoneNumber());
         return admin;
+    }
+
+    public AppUser mapRecruiterDtoToAppUser(RecruiterDetailsDto recruiterDetailsDto,
+                                            Company company){
+        AppUser user = new AppUser();
+        user.setName(recruiterDetailsDto.getName());
+        user.setEmail(recruiterDetailsDto.getEmail());
+        user.setPhoneNumber(recruiterDetailsDto.getPhoneNumber());
+        user.setUserType("RECRUITER");
+        user.setPassword("DefaultPass123");
+        user.setCompany(company);
+        user.setStatus("INACTIVE");
+        return user;
     }
 
 }

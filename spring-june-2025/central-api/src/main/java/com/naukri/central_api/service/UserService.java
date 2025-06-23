@@ -5,6 +5,7 @@ import com.naukri.central_api.dto.JobSeekerRegistrationDto;
 import com.naukri.central_api.models.AppUser;
 import com.naukri.central_api.models.Skill;
 import com.naukri.central_api.service.SkillService;
+import com.naukri.central_api.utility.AuthUtility;
 import com.naukri.central_api.utility.MappingUtility;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +20,17 @@ public class UserService {
     MappingUtility mappingUtility;
     DatabaseApiConnector dbApiConnector;
 
+    AuthUtility authUtility;
+
     @Autowired
     public UserService(SkillService skillService,
                        MappingUtility mappingUtility,
-                       DatabaseApiConnector dbApiConnector){
+                       DatabaseApiConnector dbApiConnector,
+                       AuthUtility authUtility){
         this.skillService = skillService;
         this.mappingUtility = mappingUtility;
         this.dbApiConnector = dbApiConnector;
+        this.authUtility = authUtility;
     }
 
     public AppUser registerJobSeeker(JobSeekerRegistrationDto jobSeekerDto){
@@ -57,6 +62,15 @@ public class UserService {
             return true;
         }
         return false;
+    }
+
+    public AppUser getUserFromToken(String token){
+        String email = authUtility.decryptJwtToken(token).split(":")[0];
+        return dbApiConnector.callGetUserByEmailEndpoint(email);
+    }
+
+    public boolean isAdminUser(AppUser user){
+        return user.getUserType() == "Admin" ?  true : false;
     }
 
 

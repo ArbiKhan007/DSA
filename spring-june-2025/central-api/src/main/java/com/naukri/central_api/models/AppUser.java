@@ -14,6 +14,7 @@ import java.util.UUID;
 public class AppUser {
     UUID id;
     String name;
+    String status;
     String email;
     String password;
     Long phoneNumber;
