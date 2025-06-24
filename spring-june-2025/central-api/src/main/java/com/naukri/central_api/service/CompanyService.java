@@ -1,6 +1,7 @@
 package com.naukri.central_api.service;
 
 import com.naukri.central_api.connectors.DatabaseApiConnector;
+import com.naukri.central_api.connectors.NotificationApiConnector;
 import com.naukri.central_api.dto.CompanyRegistrationDto;
 import com.naukri.central_api.dto.RecruiterDetailsDto;
 import com.naukri.central_api.exceptions.UnAuthorizedException;
@@ -18,13 +19,17 @@ public class CompanyService {
 
     UserService userService;
 
+    NotificationApiConnector notificationApiConnector;
+
     @Autowired
     public CompanyService(MappingUtility mappingUtility,
                           DatabaseApiConnector dbApiConnector,
-                          UserService userService){
+                          UserService userService,
+                          NotificationApiConnector notificationApiConnector){
         this.mappingUtility = mappingUtility;
         this.dbApiConnector = dbApiConnector;
         this.userService = userService;
+        this.notificationApiConnector = notificationApiConnector;
     }
 
     /**
@@ -64,8 +69,12 @@ public class CompanyService {
         Company company = admin.getCompany();
         // We need create user object for the recruiter
         AppUser recruiter = mappingUtility.mapRecruiterDtoToAppUser(recruiterDetailsDto, company);
-        userService.saveUser(recruiter);
+        recruiter =userService.saveUser(recruiter);
         // Mail logic
+        // We need to write some logic such that we will be able to notify recruiter that hey you are invited to this company.
+        // from here we need to trigger Notification api -> invite recruiter endpoint such that recruiter will recieve mail.
+        notificationApiConnector.callInviteRecruiterEndpoint(recruiter);
+        return recruiter;
     }
 
 }

@@ -30,7 +30,7 @@ public class DatabaseApiConnector extends RestAPI{
      * @return
      */
     public AppUser callGetUserByEmailEndpoint(String email){
-        String endpoint = baseUrl + "/user/email" + email;
+        String endpoint = baseUrl + "/user/email/" + email;
         Object resp = this.makeGetCall(endpoint, new HashMap<>());
         if(resp == null){
             return null;
