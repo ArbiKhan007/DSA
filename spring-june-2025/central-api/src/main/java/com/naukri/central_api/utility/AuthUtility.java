@@ -53,6 +53,10 @@ public class AuthUtility {
         return userService.validateCredentials(email, password);
     }
 
+    public String extractTokenFromBearerToken(String bearerToken){
+        return bearerToken.substring(7);
+    }
+
 
 
 }
