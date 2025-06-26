@@ -89,6 +89,8 @@ public class UserService {
     public AppUser getUserByEmail(String email){
         return dbApiConnector.callGetUserByEmailEndpoint(email);
     }
+
+
     AppUser saveUser(AppUser user){
         // This method will be having logic to call SaveUser endpoint of appuser controller of dbApi
         return dbApiConnector.callSaveUserEndpoint(user);

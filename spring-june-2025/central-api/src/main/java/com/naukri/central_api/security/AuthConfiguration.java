@@ -23,7 +23,8 @@ public class AuthConfiguration {
                         auth -> auth.requestMatchers(
                                         "/api/v1/central/company/register",
                                         "/api/v1/central/user/register",
-                                "/api/v1/central/company/accept-invitation/**"
+                                "/api/v1/central/company/accept-invitation/**",
+                                "/api/v1/central/user/login"
                                 ).permitAll()
                                 .anyRequest().authenticated()
                 )
