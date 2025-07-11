@@ -9,16 +9,11 @@ This flight seat mapping model will only be used for non connecting flights
  */
 @Entity
 @Table(name = "flightseatmapping")
-public class FlightSeatMapping {
+public class FlightSeatMapping extends SeatMapping {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     UUID id;
     // id	flightId	classname	range	baseprice	windowprice
     @ManyToOne
     Flight flight;
-    String className;
-    String range; // 1-20
-    int basePrice;
-    int windowPrice;
-    int totalWindow;
 }

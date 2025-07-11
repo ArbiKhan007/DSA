@@ -1,9 +1,7 @@
 package com.fbs.db_api.models;
 
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -15,11 +13,18 @@ Connecting Flight -> SubFlight list will have all the subflight passenger is goi
 // Delhi to Mumbai to Chandigarh to Sikkim
 // subflight - > [(Delhi to mumbai), (mumbai to chandigarh)]
  */
+@Entity
+@Table(name = "bookings")
 public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     UUID id;
+    @ManyToOne
     Flight flight;
+    @ManyToMany
     List<SubFlight> subFlights;
-
+    @ManyToOne
+    AppUser bookedBy;
+    int totalAmount;
+    String passengerName;
 }
