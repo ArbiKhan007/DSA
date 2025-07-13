@@ -43,4 +43,10 @@ public class UserController {
            return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
+
+
+    @GetMapping("/warehouse/admin/accept/invite/{wareHouseAdminId}")
+    public void acceptWareHouseAdminInvite(@PathVariable UUID wareHouseAdminId){
+        appUserService.acceptWareHouseAdminInvite(wareHouseAdminId);
+    }
 }

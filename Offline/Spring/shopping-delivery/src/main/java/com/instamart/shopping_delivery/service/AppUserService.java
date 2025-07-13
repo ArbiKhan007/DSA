@@ -18,10 +18,13 @@ import java.util.UUID;
 public class AppUserService {
 
    AppUserRepository appUserRepository;
+   MailService mailService;
 
    @Autowired
-   public AppUserService(AppUserRepository appUserRepository){
+   public AppUserService(AppUserRepository appUserRepository,
+                         MailService mailService){
        this.appUserRepository = appUserRepository;
+       this.mailService = mailService;
    }
 
    public AppUser registerCustomer(AppUser customer){
@@ -39,31 +42,16 @@ public class AppUserService {
            throw new InvalidOperationException("User is not allowed to invite warehosue admim");
        }
        wareHouseAdmin.setStatus("INACTIVE");
-       this.sendInvitationMail(wareHouseAdmin);
-       return appUserRepository.save(wareHouseAdmin);
+       wareHouseAdmin = appUserRepository.save(wareHouseAdmin);
+       mailService.sendWareHouseInvitationMail(wareHouseAdmin);
+       return wareHouseAdmin;
    }
 
-   public void sendInvitationMail(AppUser wareHouseAdmin){
-       JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
-       javaMailSender.setHost("smtp.gmail.com");
-       javaMailSender.setPort(587);
-       javaMailSender.setUsername("accioshoppingwebsite@gmail.com");
-       javaMailSender.setPassword("relcfdwhahhcvokv");
-       Properties props = javaMailSender.getJavaMailProperties();
-       props.put("mail.smtp.auth", "true");
-       props.put("mail.smtp.starttls.enable", "true");
-       // Mime message ke andar hum mail ka content set karte hai
-       MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-       // Mime message ke andar bhi hum directly content set nahi kar sakte hume banana hota hai mimeMessage helper
-       MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
-       try{
-           mimeMessageHelper.setTo(wareHouseAdmin.getEmail());
-           mimeMessageHelper.setSubject("Invitation to our swiggy platform as warehouse amdin");
-           mimeMessageHelper.setText("Hey " + wareHouseAdmin.getName());
-       }catch (Exception e){
-
-       }
-
-       javaMailSender.send(mimeMessage);
+   public void acceptWareHouseAdminInvite(UUID wareHouseAdminId){
+      AppUser user =  appUserRepository.findById(wareHouseAdminId).orElse(null);
+      user.setStatus("ACTIVE");
+      appUserRepository.save(user);
    }
+
+
 }
