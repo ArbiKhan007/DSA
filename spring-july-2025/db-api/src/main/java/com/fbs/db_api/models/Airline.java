@@ -1,9 +1,11 @@
 package com.fbs.db_api.models;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.UUID;
 
+@Data
 @Entity
 @Table(name = "airlines")
 public class Airline {
@@ -20,4 +22,5 @@ public class Airline {
     int totalFlights;
     @OneToOne
     AppUser admin;
+    String status;
 }

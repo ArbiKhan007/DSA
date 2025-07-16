@@ -1,5 +1,6 @@
 package com.fbs.central_api.connectors;
 
+import com.fbs.central_api.models.Airline;
 import com.fbs.central_api.models.AppUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,6 +34,22 @@ public class DBApiConnector {
         log.info("Calling dbApi create user endpoint");
         ResponseEntity<AppUser> response = restTemplate.exchange(url, HttpMethod.POST, request, AppUser.class);
         log.info("Respose: " + response.toString());
+        return response.getBody();
+    }
+
+    /*
+    We will write one method and that method will be hitting request to database api create airline endpoint
+     */
+    public Airline callCreateAirlineEndpoint(Airline airline){
+        log.info("Inside callCreateAirlineEndpoint with payload: " + airline.toString());
+        // 1. Create url
+        String url = dbApiBaseUrl + "/airline/create";
+        // 2. create request
+        RequestEntity request = RequestEntity.post(url).body(airline);
+        // 3. Create resttemplate object
+        RestTemplate restTemplate = new  RestTemplate();
+        // 4. By using restTemplate.exchange method to call this endpoint
+        ResponseEntity<Airline> response = restTemplate.exchange(url, HttpMethod.POST, request, Airline.class);
         return response.getBody();
     }
 

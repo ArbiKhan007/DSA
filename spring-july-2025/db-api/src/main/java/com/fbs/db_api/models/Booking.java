@@ -2,7 +2,9 @@ package com.fbs.db_api.models;
 
 
 import jakarta.persistence.*;
+import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,6 +15,7 @@ Connecting Flight -> SubFlight list will have all the subflight passenger is goi
 // Delhi to Mumbai to Chandigarh to Sikkim
 // subflight - > [(Delhi to mumbai), (mumbai to chandigarh)]
  */
+@Data
 @Entity
 @Table(name = "bookings")
 public class Booking {
@@ -27,4 +30,6 @@ public class Booking {
     AppUser bookedBy;
     int totalAmount;
     String passengerName;
+    LocalDateTime createdAt;
+    LocalDateTime updatedAt;
 }

@@ -3,6 +3,7 @@ package com.fbs.db_api.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
@@ -27,4 +28,7 @@ public class AppUser {
     @Column(nullable = false)
     boolean isVerified;
     String userType;
+    String status;
+    LocalDateTime createdAt;
+    LocalDateTime updatedAt;
 }

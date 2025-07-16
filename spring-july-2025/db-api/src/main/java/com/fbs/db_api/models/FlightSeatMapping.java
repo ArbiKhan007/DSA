@@ -1,12 +1,15 @@
 package com.fbs.db_api.models;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 /*
 This flight seat mapping model will only be used for non connecting flights
  */
+@Data
 @Entity
 @Table(name = "flightseatmapping")
 public class FlightSeatMapping extends SeatMapping {
@@ -16,4 +19,6 @@ public class FlightSeatMapping extends SeatMapping {
     // id	flightId	classname	range	baseprice	windowprice
     @ManyToOne
     Flight flight;
+    LocalDateTime createdAt;
+    LocalDateTime updatedAt;
 }
