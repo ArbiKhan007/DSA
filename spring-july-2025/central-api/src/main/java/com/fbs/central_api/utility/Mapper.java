@@ -34,7 +34,7 @@ public class Mapper {
         airline.setStatus(AirlineStatus.INACTIVE.toString());
         airline.setAdmin(airlineAdmin);
         airline.setEmployees(airlineRegistrationDto.getEmployees());
-        airline.setWebsite(airline.getWebsite());
+        airline.setWebsite(airlineRegistrationDto.getWebsite());
         airline.setCompanyName(airlineRegistrationDto.getCompanyName());
         airline.setTotalFlights(airlineRegistrationDto.getTotalFlights());
         airline.setCreatedAt(LocalDateTime.now());

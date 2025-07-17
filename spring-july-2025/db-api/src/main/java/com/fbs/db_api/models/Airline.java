@@ -3,6 +3,7 @@ package com.fbs.db_api.models;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
@@ -23,4 +24,6 @@ public class Airline {
     @OneToOne
     AppUser admin;
     String status;
+    LocalDateTime createdAt;
+    LocalDateTime updatedAt;
 }
