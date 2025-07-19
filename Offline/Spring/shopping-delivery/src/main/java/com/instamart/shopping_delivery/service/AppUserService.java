@@ -3,6 +3,7 @@ package com.instamart.shopping_delivery.service;
 import com.instamart.shopping_delivery.exceptions.InvalidOperationException;
 import com.instamart.shopping_delivery.exceptions.UserNotExistException;
 import com.instamart.shopping_delivery.models.AppUser;
+import com.instamart.shopping_delivery.models.WareHouse;
 import com.instamart.shopping_delivery.repositories.AppUserRepository;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,5 +54,12 @@ public class AppUserService {
       appUserRepository.save(user);
    }
 
+   public AppUser isAppAdmin(UUID userId){
+      AppUser user = appUserRepository.findById(userId).orElse(null);
+      if(user.getUserType().equals("APP_ADMIN")){
+          return user;
+      }
+      return null;
+   }
 
 }

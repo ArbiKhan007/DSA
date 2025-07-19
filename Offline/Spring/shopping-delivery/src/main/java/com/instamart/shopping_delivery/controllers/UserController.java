@@ -44,9 +44,11 @@ public class UserController {
         }
     }
 
-
     @GetMapping("/warehouse/admin/accept/invite/{wareHouseAdminId}")
     public void acceptWareHouseAdminInvite(@PathVariable UUID wareHouseAdminId){
         appUserService.acceptWareHouseAdminInvite(wareHouseAdminId);
     }
+
+
+
 }
