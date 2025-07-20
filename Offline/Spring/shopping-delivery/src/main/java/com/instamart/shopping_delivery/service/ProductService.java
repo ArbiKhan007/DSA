@@ -47,4 +47,12 @@ public class ProductService {
         productDto.setId(product.getId());
         return productDto;
     }
+
+    public void updateProduct(Product product){
+        productRepository.save(product);
+    }
+
+    public Product isValidProduct(UUID productId){
+        return productRepository.findById(productId).orElse(null);
+    }
 }

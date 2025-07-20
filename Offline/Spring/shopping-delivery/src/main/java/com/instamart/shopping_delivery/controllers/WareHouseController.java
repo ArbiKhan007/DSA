@@ -30,4 +30,16 @@ public class WareHouseController {
         return new ResponseEntity(wareHouse, HttpStatus.CREATED);
     }
 
+    @PutMapping("/assign/manager")
+    public ResponseEntity assignManagerToWareHouse(@RequestParam UUID adminId,
+                                                   @RequestParam UUID wareHouseId,
+                                                   @RequestParam UUID wareHouseAdminId){
+        // WareHouse Service
+        WareHouse wareHouse = wareHouseService.assignManagerToWareHouse(adminId,
+                wareHouseId,
+                wareHouseAdminId);
+        return new ResponseEntity(wareHouse, HttpStatus.OK);
+
+    }
+
 }

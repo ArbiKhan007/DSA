@@ -62,4 +62,8 @@ public class AppUserService {
       return null;
    }
 
+   public AppUser getUserById(UUID userId){
+       return appUserRepository.findById(userId).orElse(null);
+   }
+
 }
