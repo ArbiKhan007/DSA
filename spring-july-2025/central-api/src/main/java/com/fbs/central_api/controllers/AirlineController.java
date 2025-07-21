@@ -49,5 +49,11 @@ public class AirlineController {
         airlineService.acceptAirlineRequest(airlineId);
     }
 
+    @GetMapping("/request/reject/{airlineId}")
+    public void rejectAirlineRequest(@PathVariable UUID airlineId){
+        log.info("Reject Airline function: " + airlineId.toString());
+        airlineService.rejectAirlineRequest(airlineId);
+    }
+
 
 }
