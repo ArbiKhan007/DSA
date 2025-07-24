@@ -1,7 +1,10 @@
 package com.fbs.central_api.controllers;
 
+import com.fbs.central_api.dto.AircraftRegistrationDto;
 import com.fbs.central_api.dto.AirlineRegistrationDto;
+import com.fbs.central_api.models.Aircraft;
 import com.fbs.central_api.models.Airline;
+import com.fbs.central_api.service.AircraftService;
 import com.fbs.central_api.service.AirlineService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +20,13 @@ import java.util.UUID;
 public class AirlineController {
 
     AirlineService airlineService;
+    AircraftService aircraftService;
     @Autowired
-    public AirlineController(AirlineService airlineService){
+    public AirlineController(AirlineService airlineService,
+                             AircraftService aircraftService){
+
         this.airlineService = airlineService;
+        this.aircraftService = aircraftService;
     }
 
     /*
@@ -54,6 +61,14 @@ public class AirlineController {
         log.info("Reject Airline function: " + airlineId.toString());
         airlineService.rejectAirlineRequest(airlineId);
     }
+
+    @PostMapping("/aircraft/register")
+    public Aircraft registerAircraft(@RequestBody AircraftRegistrationDto aircraftRegistrationDto,
+                                     @RequestHeader String Authorization){
+        // We need to call the service
+        return aircraftService.registerAircraft(aircraftRegistrationDto, Authorization);
+    }
+
 
 
 }

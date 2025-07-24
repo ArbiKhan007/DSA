@@ -1,5 +1,7 @@
 package com.fbs.central_api.configurations;
 
+import com.fbs.central_api.filter.AuthFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -27,7 +29,8 @@ public class AuthConfiguration {
                 .disable()
                 .authorizeHttpRequests(
                         auth -> auth.requestMatchers(
-                                        "/api/v1/central/user/login"
+                                        "/api/v1/central/user/login",
+                                "/api/v1/central/airline/register"
                                 ).permitAll()
                                 .anyRequest().authenticated()
                 )
