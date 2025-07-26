@@ -28,8 +28,8 @@ public class AppUserService {
        this.mailService = mailService;
    }
 
-   public AppUser registerCustomer(AppUser customer){
-       return appUserRepository.save(customer);
+   public AppUser registerUser(AppUser user){
+       return appUserRepository.save(user);
    }
 
    public AppUser wareHouseAdminInvite(UUID userId, AppUser wareHouseAdmin){

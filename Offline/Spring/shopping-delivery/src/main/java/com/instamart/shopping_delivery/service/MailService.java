@@ -28,6 +28,32 @@ public class MailService {
         this.templateEngine = templateEngine;
     }
 
+    public void sendDeliveryPartnerRegistrationMailToWareHouseAdmin(AppUser deliveryPartner,
+                                                                    String wareHouseAdminEmail) {
+        Context context = new Context();
+        context.setVariable("name", deliveryPartner.getName());
+        context.setVariable("email", deliveryPartner.getEmail());
+        context.setVariable("phoneNumber", deliveryPartner.getPhoneNumber());
+        context.setVariable("userType", deliveryPartner.getUserType());
+        context.setVariable("status", deliveryPartner.getStatus());
+        context.setVariable("acceptLink", "http://localhost:8080/api/v1/user/deliverypartner/registration/accept/" + deliveryPartner.getId().toString());
+
+        String htmlContent = templateEngine.process("delivery-partner-registration", context);
+
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
+        try{
+            mimeMessageHelper.setTo(wareHouseAdminEmail);
+            mimeMessageHelper.setSubject("Delivery Partner Registration");
+            mimeMessageHelper.setText(htmlContent, true);
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
+
+        javaMailSender.send(mimeMessage);
+
+
+    }
 
     public void sendWareHouseInvitationMail(AppUser wareHouseAdmin){
         String platformName = "Noida Evening Grocery App";

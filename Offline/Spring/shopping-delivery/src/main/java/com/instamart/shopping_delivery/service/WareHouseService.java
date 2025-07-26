@@ -6,7 +6,6 @@ import com.instamart.shopping_delivery.models.*;
 import com.instamart.shopping_delivery.repositories.WareHouseItemRepository;
 import com.instamart.shopping_delivery.repositories.WareHouseRepository;
 import com.instamart.shopping_delivery.utility.MappingUtility;
-import jakarta.servlet.http.PushBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -103,5 +102,14 @@ public class WareHouseService {
         saveWareHouse(wareHouse);
         // Mail Service -> Notify WareHouse admin that a ware house is assigned to him
         return wareHouse;
+    }
+
+    public WareHouse findWareHouseAtPincode(int pincode){
+        // We should check warehouse table and check is there any warehouse at this pincode.
+        UUID wareHouseId  = wareHouseRepository.getWareHouseByLocation(pincode);
+        if(wareHouseId == null){
+            return null;
+        }
+        return this.getWareHouseById(wareHouseId);
     }
 }
