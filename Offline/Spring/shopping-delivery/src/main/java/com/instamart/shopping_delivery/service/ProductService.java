@@ -1,14 +1,17 @@
 package com.instamart.shopping_delivery.service;
 
 import com.instamart.shopping_delivery.dto.ProductDto;
+import com.instamart.shopping_delivery.enums.UserTypeEnum;
 import com.instamart.shopping_delivery.exceptions.InvalidOperationException;
 import com.instamart.shopping_delivery.models.AppUser;
+import com.instamart.shopping_delivery.models.Location;
 import com.instamart.shopping_delivery.models.Product;
 import com.instamart.shopping_delivery.repositories.ProductRepository;
 import com.instamart.shopping_delivery.utility.MappingUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -18,14 +21,18 @@ public class ProductService {
     ProductRepository productRepository;
 
     MappingUtility mappingUtility;
+    LocationService locationService;
+
 
     @Autowired
     public ProductService(AppUserService appUserService,
                           ProductRepository productRepository,
-                          MappingUtility mappingUtility){
+                          MappingUtility mappingUtility,
+                          LocationService locationService){
         this.appUserService = appUserService;
         this.productRepository = productRepository;
         this.mappingUtility = mappingUtility;
+        this.locationService = locationService;
     }
 
     public Product saveProduct(Product product){
@@ -55,4 +62,15 @@ public class ProductService {
     public Product isValidProduct(UUID productId){
         return productRepository.findById(productId).orElse(null);
     }
+
+    public Product getProductById(UUID productId){
+        return productRepository.findById(productId).orElse(null);
+    }
+
+    public List<Product> getProductsByName(String name){
+        // product repositoru
+        String namePattern = "%" +  name + "%";
+        return productRepository.getProductByName(namePattern);
+    }
+
 }

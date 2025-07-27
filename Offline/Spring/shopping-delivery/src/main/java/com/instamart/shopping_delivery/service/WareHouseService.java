@@ -1,6 +1,8 @@
 package com.instamart.shopping_delivery.service;
 
+import com.instamart.shopping_delivery.dto.WareHouseItemDto;
 import com.instamart.shopping_delivery.dto.WareHouseRegistrationDto;
+import com.instamart.shopping_delivery.enums.UserTypeEnum;
 import com.instamart.shopping_delivery.exceptions.InvalidOperationException;
 import com.instamart.shopping_delivery.models.*;
 import com.instamart.shopping_delivery.repositories.WareHouseItemRepository;
@@ -11,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -111,5 +115,62 @@ public class WareHouseService {
             return null;
         }
         return this.getWareHouseById(wareHouseId);
+    }
+
+    public WareHouse getWareHouseByCustomerId(UUID customerId){
+        AppUser customer = appUserService.getUserById(customerId);
+        if(!customer.getUserType().equals(UserTypeEnum.CUSTOMER.toString())){
+            throw new InvalidOperationException(String.format("User with id %s is not allowed to see all products", customerId.toString()));
+        }
+        Location location = locationService.getUserPrimaryLocation(customer);
+        int pincode = location.getPinCode();
+        WareHouse wareHouse = this.findWareHouseAtPincode(pincode);
+        return wareHouse;
+    }
+
+    public List<Product> getAllProductsByPincode(UUID customerId){
+        WareHouse wareHouse = getWareHouseById(customerId);
+        List<WareHouseItem> wareHouseItems = wareHouse.getWareHouseItems();
+        List<Product> products = new ArrayList<>();
+        for(WareHouseItem wareHouseItem : wareHouseItems){
+            UUID pid = wareHouseItem.getPid();
+            // Product Service
+            Product product = productService.getProductById(pid);
+            products.add(product);
+        }
+        return products;
+    }
+
+    public List<WareHouseItemDto> getProductsAtPincodeByName(String name,
+                                           UUID customerId){
+        // product service
+        List<Product> products = productService.getProductsByName(name);
+        WareHouse wareHouse = getWareHouseByCustomerId(customerId);
+        List<WareHouseItem> wareHouseItems = wareHouse.getWareHouseItems();
+        List<WareHouseItemDto> wareHouseItemDtos = new ArrayList<>();
+        for(int i  = 0; i < products.size(); i++){
+            UUID productId = products.get(i).getId();
+            String productName = products.get(i).getProductName();
+            WareHouseItemDto wareHouseItemDto = new WareHouseItemDto();
+            wareHouseItemDto.setProductName(productName);
+            wareHouseItemDto.setDiscount(0.0);
+            wareHouseItemDto.setAvailable(false);
+            wareHouseItemDto.setWid(wareHouse.getId());
+            wareHouseItemDto.setPrice(products.get(i).getUnitPrice());
+            for(int j = 0; j < wareHouseItems.size(); j++){
+                UUID itemProductId = wareHouseItems.get(j).getPid();
+                if(productId.toString().equals(itemProductId.toString())){
+                   wareHouseItemDto.setAvailable(true);
+                   wareHouseItemDto.setDiscount(wareHouseItems.get(j).getDiscount());
+                }
+            }
+
+            wareHouseItemDtos.add(wareHouseItemDto);
+
+        }
+
+
+        return wareHouseItemDtos;
+
     }
 }

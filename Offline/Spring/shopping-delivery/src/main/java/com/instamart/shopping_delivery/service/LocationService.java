@@ -1,7 +1,9 @@
 package com.instamart.shopping_delivery.service;
 
+import com.instamart.shopping_delivery.models.AppUser;
 import com.instamart.shopping_delivery.models.Location;
 import com.instamart.shopping_delivery.repositories.LocationRepository;
+import lombok.CustomLog;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,5 +34,9 @@ public class LocationService {
         location.setCreatedAt(LocalDateTime.now());
         location.setUpdatedAt(LocalDateTime.now());
         return locationRepository.save(location);
+    }
+
+    public Location getUserPrimaryLocation(AppUser user){
+        return user.getLocations().get(0);
     }
 }
