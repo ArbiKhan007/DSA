@@ -1,20 +1,18 @@
-package com.fbs.db_api.models;
+package com.fbs.central_api.models;
 
-import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Data
-@Entity
-@Table(name = "subflights")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class SubFlight {
-     //id	flightid	starting 	ending	layover	boarding time	departure time	arrival time
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //id	flightid	starting 	ending	layover	boarding time	departure time	arrival time
     UUID id;
-    @ManyToOne
     Flight flight;
     int priority;
     String sourceAirport;

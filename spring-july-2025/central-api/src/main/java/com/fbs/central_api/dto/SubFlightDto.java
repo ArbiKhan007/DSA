@@ -1,8 +1,11 @@
 package com.fbs.central_api.dto;
 
+import lombok.Data;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Data
 public class SubFlightDto {
     int priority;
     String sourceAirport;

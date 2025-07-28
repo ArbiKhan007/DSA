@@ -3,15 +3,15 @@ package com.fbs.central_api.controllers;
 import com.fbs.central_api.dto.LoginDto;
 
 import com.fbs.central_api.exceptions.InvalidCredentials;
+import com.fbs.central_api.service.FlightService;
 import com.fbs.central_api.service.UserService;
 import com.fbs.central_api.utility.AuthUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 
 /**
  * Purpose of this general user controller to have all the common endpoints of all the type of users.
@@ -23,11 +23,15 @@ public class GeneralUserController {
     UserService userService;
     AuthUtility authUtility;
 
+    FlightService flightService;
+
     @Autowired
     public GeneralUserController(UserService userService,
-                                 AuthUtility authUtility){
+                                 AuthUtility authUtility,
+                                 FlightService flightService){
         this.userService = userService;
         this.authUtility = authUtility;
+        this.flightService = flightService;
     }
 
 
@@ -39,5 +43,13 @@ public class GeneralUserController {
         }catch (InvalidCredentials e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
         }
+    }
+
+    @GetMapping("/search")
+    public Object searchFlight(@RequestParam String sourceAirport,
+                                       @RequestParam String destinationAirport,
+                                       @RequestParam String dateTime){
+        // Flight service
+        return flightService.searchFlight(sourceAirport, destinationAirport, dateTime);
     }
 }
