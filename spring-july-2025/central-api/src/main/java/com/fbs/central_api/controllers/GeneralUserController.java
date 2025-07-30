@@ -6,6 +6,7 @@ import com.fbs.central_api.exceptions.InvalidCredentials;
 import com.fbs.central_api.service.FlightService;
 import com.fbs.central_api.service.UserService;
 import com.fbs.central_api.utility.AuthUtility;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
  */
 @RestController
 @RequestMapping("/api/v1/central/user")
+@Slf4j
 public class GeneralUserController {
 
     UserService userService;
@@ -48,8 +50,14 @@ public class GeneralUserController {
     @GetMapping("/search")
     public Object searchFlight(@RequestParam String sourceAirport,
                                        @RequestParam String destinationAirport,
+
                                        @RequestParam String dateTime){
         // Flight service
+        log.info(sourceAirport + " " + destinationAirport + " " + dateTime);
+        sourceAirport.replace('+', ' ');
+        destinationAirport.replace('+', ' ');
+        dateTime.replace('+', ' ');
+        log.info(sourceAirport + " " + destinationAirport + " " + dateTime);
         return flightService.searchFlight(sourceAirport, destinationAirport, dateTime);
     }
 }

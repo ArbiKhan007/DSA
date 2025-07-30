@@ -5,6 +5,7 @@ import com.fbs.central_api.enums.UserType;
 import com.fbs.central_api.exceptions.InvalidCredentials;
 import com.fbs.central_api.models.AppUser;
 import com.fbs.central_api.utility.AuthUtility;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import java.util.List;
 This class is going contain all the user related logics
  */
 @Service
+@NoArgsConstructor
 public class UserService {
 
     DBApiConnector dbApiConnector;
@@ -89,6 +91,19 @@ public class UserService {
         String payload = authUtility.decryptJwtToken(token);
         String email = payload.split(":")[0];
         return this.getUserByEmail(email);
+    }
+
+    public String valueChecker(Integer a, Integer b){
+        if(a == null || b == null){
+            return "Null Values present";
+        }
+        if(a == 5){
+            return "Hey How are you ?";
+        }
+        if(b == 5){
+            return "I am good";
+        }
+        return a + b + "";
     }
 
 }
