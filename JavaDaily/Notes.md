@@ -50,6 +50,7 @@ stringData:
 
 Save this as airflow-variable-sync.yaml:
 
+`
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -90,7 +91,7 @@ spec:
             - name: airflow-config
               configMap:
                 name: edp-airflow-app-config   # your ConfigMap name
-
+`
 🚀 Deployment
 
 Verify your secret contains the right key:
