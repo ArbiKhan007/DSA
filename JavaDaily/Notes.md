@@ -96,21 +96,22 @@ spec:
 
 Verify your secret contains the right key:
 
+```
 kubectl get secret edp-airflow-metadata-connection -n <your-namespace> -o yaml
-
+```
 
 Update key: connection if needed.
 
 Apply the CronJob:
-
+```
 kubectl apply -f airflow-variable-sync.yaml
-
+```
 
 Check if job runs:
-
+```
 kubectl get jobs -n <your-namespace>
 kubectl logs job/<job-name> -n <your-namespace>
-
+```
 ✅ Verification
 
 Go to Airflow UI → Admin → Variables.
