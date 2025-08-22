@@ -25,7 +25,7 @@ Connects to the Airflow metadata DB via secret edp-airflow-metadata-connection.
 Airflow deployed on Kubernetes (with metadata DB reachable).
 
 ConfigMap containing your variables, e.g.:
-
+```
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -35,9 +35,11 @@ data:
   VAR1: "value1"
   VAR2: "value2"
 
+```
+
 
 Secret containing DB connection, e.g.:
-
+```
 apiVersion: v1
 kind: Secret
 metadata:
@@ -45,6 +47,7 @@ metadata:
   namespace: <your-namespace>
 stringData:
   connection: postgresql+psycopg2://airflow:password@postgres-service:5432/airflow
+```
 
 📋 CronJob Manifest
 
