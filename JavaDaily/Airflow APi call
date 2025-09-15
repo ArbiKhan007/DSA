@@ -1,0 +1,7 @@
+curl -X POST "http://<your-company-airflow-domain>/api/v1/variables" \
+  -u "your-username:your-password" \
+  -H "Content-Type: application/json" \
+  -d '{
+        "key": "MY_KEY",
+        "value": "MY_VALUE"
+      }'
