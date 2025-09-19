@@ -1,6 +1,7 @@
 import logging
 from airflow_client.client.api.variable_api import VariableApi
 from airflow_client.client.exceptions import ApiException
+from airflow_client.client.model.variable import Variable
 from airflow_connection import AirflowConnectionClass
 
 
