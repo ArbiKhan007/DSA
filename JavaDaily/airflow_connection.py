@@ -15,7 +15,7 @@ logging.basicConfig(
 logger = logging.getLogger("AirflowClient")
 
 
-class AirflowClient:
+class AirflowConnectionClass:
     """
     Responsible only for creating and returning an Airflow ApiClient.
     """
