@@ -1,7 +1,9 @@
 import logging
 from airflow_client.client.api.variable_api import VariableApi
 from airflow_client.client.model.variable import Variable
-from airflow_client import AirflowClient
+from airflow_connection import AirflowConnectionClass
+
+
 
 
 # -----------------------------
@@ -53,7 +55,7 @@ class AirflowVariableManager:
 # Example Usage
 # -----------------------------
 if __name__ == "__main__":
-    airflow_client = AirflowClient(
+    airflow_client = AirflowConnectionClass(
         host="https://airflow.mycompany.com/api/v1",
         username="admin",
         password="admin",
