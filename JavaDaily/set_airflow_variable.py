@@ -1,9 +1,8 @@
 import logging
 from airflow_client.client.api.variable_api import VariableApi
 from airflow_client.client.model.variable import Variable
+from airflow_client.client.exceptions import ApiException
 from airflow_connection import AirflowConnectionClass
-
-
 
 
 # -----------------------------
@@ -24,29 +23,32 @@ class AirflowVariableManager:
     def __init__(self, api_client):
         self.variable_api = VariableApi(api_client)
 
-    def create_or_update_variable(self, key: str, value: str) -> None:
+    def create_or_update_variable(self, key: str, value: str) -> bool:
         var_obj = Variable(key=key, value=value)
         try:
             self.variable_api.post_variables(var_obj)
             logger.info("Created variable: %s", key)
-        except Exception:
+            return True
+        except ApiException:
             try:
                 self.variable_api.patch_variable(key, var_obj)
                 logger.info("Updated variable: %s", key)
-            except Exception as e:
+                return True
+            except ApiException as e:
                 logger.error("Failed to create/update variable %s: %s", key, e)
+                return False
 
     def bulk_create_or_update_variables(self, variables: dict) -> None:
         for key, value in variables.items():
             self.create_or_update_variable(key, str(value))
 
-    def list_variables(self, limit: int = 100) -> list:
+    def list_variables(self, limit: int = 100) -> list[str]:
         try:
             result = self.variable_api.get_variables(limit=limit)
             keys = [v.key for v in result.variables]
             logger.info("Variables found: %s", keys)
             return keys
-        except Exception as e:
+        except ApiException as e:
             logger.error("Error listing variables: %s", e)
             return []
 
