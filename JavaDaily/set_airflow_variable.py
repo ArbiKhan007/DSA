@@ -1,3 +1,4 @@
+import os
 import logging
 from airflow_client.client.api.variable_api import VariableApi
 from airflow_client.client.exceptions import ApiException
@@ -52,6 +53,14 @@ class AirflowVariableManager:
             logger.error("Error listing variables: %s", e)
             return []
 
+    def sync_env_variables_to_airflow(self) -> None:
+        """
+        Reads all OS environment variables and syncs them to Airflow variables.
+        """
+        env_vars = dict(os.environ)
+        logger.info("Syncing %d environment variables to Airflow", len(env_vars))
+        self.bulk_create_or_update_variables(env_vars)
+
 
 # -----------------------------
 # Example Usage
@@ -68,14 +77,4 @@ if __name__ == "__main__":
     client = airflow_client.get_client()
     manager = AirflowVariableManager(client)
 
-    # Create or update single variable
-    manager.create_or_update_variable("MY_TEST_KEY", "12345")
-
-    # Bulk update
-    manager.bulk_create_or_update_variables({
-        "ENV": "prod",
-        "MAX_RETRIES": "5"
-    })
-
-    # List variables
-    manager.list_variables(limit=10)
+    manager.sync_env_variables_to_airflow()
