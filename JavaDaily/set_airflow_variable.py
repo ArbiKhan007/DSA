@@ -4,6 +4,7 @@ from airflow_client.client.api.variable_api import VariableApi
 from airflow_client.client.exceptions import ApiException
 from airflow_client.client.model.variable import Variable
 from airflow_connection import AirflowConnectionClass
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 
 # -----------------------------
@@ -40,8 +41,18 @@ class AirflowVariableManager:
                 return False
 
     def bulk_create_or_update_variables(self, variables: dict) -> None:
-        for key, value in variables.items():
-            self.create_or_update_variable(key, str(value))
+         with ThreadPoolExecutor(max_workers=max_workers) as executor:
+            futures = {
+                executor.submit(self.create_or_update_variable, key, str(value)): key
+                for key, value in variables.items()
+            }
+            for future in as_completed(futures):
+                key = futures[future]
+                try:
+                    future.result()
+                except Exception as e:
+                    logger.error("Error syncing variable %s: %s", key, e)
+
 
     def list_variables(self, limit: int = 100) -> list[str]:
         try:
