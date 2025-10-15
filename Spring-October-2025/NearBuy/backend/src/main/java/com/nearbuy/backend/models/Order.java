@@ -5,21 +5,30 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+@Entity
+@Table(name = "orders")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Entity
-@Table(name = "registration-requests")
-public class RegistrationRequest {
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     UUID id;
+    double totalPrice;
+    @ManyToOne
+    User customer;
+    String state;
     @ManyToOne
     Shop shop;
-    String shopDescription;
+    @ManyToOne
+    User deliveryPartner;
+    LocalDateTime assignedDateTime;
+    LocalDateTime deliveredDateTime;
+    LocalDateTime placedDateTime;
     @OneToMany
-    List<Activity> activities;
+    List<OrderProduct> orderProductList;
 }

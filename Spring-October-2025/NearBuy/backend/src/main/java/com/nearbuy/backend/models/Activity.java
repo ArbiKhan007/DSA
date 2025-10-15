@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,14 +13,13 @@ import java.util.UUID;
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name = "registration-requests")
-public class RegistrationRequest {
+@Table(name = "activities")
+public class Activity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     UUID id;
+    String text;
     @ManyToOne
-    Shop shop;
-    String shopDescription;
-    @OneToMany
-    List<Activity> activities;
+    User user;
+    LocalDateTime createdAt;
 }

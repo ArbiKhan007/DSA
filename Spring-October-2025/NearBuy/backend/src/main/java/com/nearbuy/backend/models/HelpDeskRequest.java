@@ -11,15 +11,16 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Table(name = "help-desk-requests")
 @Entity
-@Table(name = "registration-requests")
-public class RegistrationRequest {
+public class HelpDeskRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    UUID id;
+    private UUID id;
+    String query;
+    String state;
     @ManyToOne
-    Shop shop;
-    String shopDescription;
+    User assignedTo;
     @OneToMany
     List<Activity> activities;
 }

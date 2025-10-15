@@ -8,18 +8,23 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 import java.util.UUID;
 
+@Table(name = "products")
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Entity
-@Table(name = "registration-requests")
-public class RegistrationRequest {
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     UUID id;
+    String productName;
+    String productSpecification;
+    String manufacturer;
+    String price;
+    double discount;
     @ManyToOne
     Shop shop;
-    String shopDescription;
+    String category;
     @OneToMany
-    List<Activity> activities;
+    List<ProductImageLink> productImageLinks;
 }
