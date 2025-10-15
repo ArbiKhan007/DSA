@@ -16,7 +16,7 @@ import java.util.UUID;
 public class RegistrationRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    UUID id;
+    int id;
     @ManyToOne
     Shop shop;
     String shopDescription;

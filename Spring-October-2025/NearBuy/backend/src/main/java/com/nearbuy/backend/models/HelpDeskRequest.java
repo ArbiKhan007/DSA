@@ -16,7 +16,7 @@ import java.util.UUID;
 public class HelpDeskRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private int id;
     String query;
     String state;
     @ManyToOne

@@ -9,6 +9,6 @@ import java.util.UUID;
 public class ProductImageLink {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    UUID id;
+    int id;
     String imageLink;
 }

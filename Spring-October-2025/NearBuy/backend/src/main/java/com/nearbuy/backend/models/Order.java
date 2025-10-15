@@ -17,7 +17,7 @@ import java.util.UUID;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    UUID id;
+    int id;
     double totalPrice;
     @ManyToOne
     User customer;

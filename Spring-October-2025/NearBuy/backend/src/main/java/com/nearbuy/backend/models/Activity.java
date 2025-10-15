@@ -17,7 +17,7 @@ import java.util.UUID;
 public class Activity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    UUID id;
+    int id;
     String text;
     @ManyToOne
     User user;

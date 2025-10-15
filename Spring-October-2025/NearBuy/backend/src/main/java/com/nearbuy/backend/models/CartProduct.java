@@ -10,7 +10,7 @@ import java.util.UUID;
 public class CartProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    UUID id;
+    int id;
     UUID cartId;
     UUID productId;
     int quantity;

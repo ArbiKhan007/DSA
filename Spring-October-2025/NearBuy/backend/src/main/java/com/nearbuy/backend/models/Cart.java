@@ -10,7 +10,7 @@ import java.util.UUID;
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    UUID id;
+    int id;
     double totalPrice;
     @OneToOne
     User customer;
