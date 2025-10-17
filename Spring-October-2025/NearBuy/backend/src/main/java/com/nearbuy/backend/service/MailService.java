@@ -10,6 +10,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 import java.util.Properties;
 
@@ -58,7 +59,6 @@ public class MailService {
         context.setVariable("rejectLink", "https://www.google.com/");
         TemplateEngine templateEngine = getTemplateEngine();
         String htmlTemplate = templateEngine.process("admin-invitation-template", context);
-
         mimeMessageHelper.setText(htmlTemplate, true);
         javaMailSender.send(mimeMessage);
     }
