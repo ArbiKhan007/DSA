@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Admin Invitation - NewBuy</title>
+    <style>
+        body {
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          background-color: #f6f9fc;
+          margin: 0;
+          padding: 0;
+        }
+
+        .container {
+          max-width: 600px;
+          background: #ffffff;
+          margin: 40px auto;
+          border-radius: 10px;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+          padding: 30px;
+        }
+
+        .header {
+          text-align: center;
+          border-bottom: 2px solid #f1f1f1;
+          padding-bottom: 15px;
+          margin-bottom: 20px;
+        }
+
+        .header img {
+          width: 100px;
+          height: auto;
+          margin-bottom: 10px;
+        }
+
+        .header h2 {
+          color: #2d3748;
+          font-size: 22px;
+          margin: 0;
+        }
+
+        .content {
+          font-size: 15px;
+          color: #4a5568;
+          line-height: 1.6;
+        }
+
+        .btn-group {
+          text-align: center;
+          margin-top: 30px;
+        }
+
+        .btn {
+          border: none;
+          padding: 10px 25px;
+          border-radius: 6px;
+          cursor: pointer;
+          font-size: 15px;
+          color: #fff;
+          margin: 0 10px;
+          text-decoration: none;
+        }
+
+        .btn-accept {
+          background-color: #2f855a;
+        }
+
+        .btn-reject {
+          background-color: #c53030;
+        }
+
+        .footer {
+          text-align: center;
+          font-size: 13px;
+          color: #a0aec0;
+          margin-top: 30px;
+          border-top: 1px solid #edf2f7;
+          padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" alt="NewBuy Logo" />
+        <h2>Invitation to Join NewBuy Platform</h2>
+    </div>
+
+    <div class="content">
+        <p>Hi <strong th:text="[[${adminName}]]">Admin</strong>,</p>
+
+        <p>
+            You have been invited by <strong th:text="[[${invitedByName}"]]>Maint User</strong>
+            (<span th:text="[[${invitedByEmail}]]">maint@example.com</span>)
+            to join the <strong>NewBuy Platform</strong> as an <strong>Admin</strong>.
+        </p>
+
+        <p>
+            Please review this invitation and choose one of the options below:
+        </p>
+
+        <div class="btn-group">
+            <form th:action="@{${acceptLink}}" method="put">
+                <button type="submit" class="btn btn-accept">Accept</button>
+            </form>
+
+            <form th:action="@{${rejectLink}}" method="put">
+                <button type="submit" class="btn btn-reject">Reject</button>
+            </form>
+        </div>
+
+        <p style="margin-top: 25px;">
+            If you did not expect this invitation, you can safely ignore this email.
+        </p>
+    </div>
+
+    <div class="footer">
+        <p>© 2025 NewBuy Platform. All rights reserved.</p>
+    </div>
+</div>
+</body>
+</html>

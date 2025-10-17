@@ -27,7 +27,7 @@ public class UserService {
     }
 
     public User signin(SignInDto signInDto){
-        String email = signInDto();
+        String email = signInDto.getEmail();
         // We need to get UserRepository and from userRepository we will get User by email
         User user = userRepository.findByEmail(email);
         if(user == null){

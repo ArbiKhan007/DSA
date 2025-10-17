@@ -4,6 +4,7 @@ import com.nearbuy.backend.dto.InviteAdminDto;
 import com.nearbuy.backend.exceptions.NotAuthorizedException;
 import com.nearbuy.backend.models.User;
 import com.nearbuy.backend.utilities.MappingUtility;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,18 +15,21 @@ public class AdminService {
 
     UserService userService;
     MappingUtility mappingUtility;
+    MailService mailService;
 
     @Autowired
     public AdminService(UserService userService,
-                        MappingUtility mappingUtility){
+                        MappingUtility mappingUtility,
+                        MailService mailService){
         this.userService = userService;
         this.mappingUtility = mappingUtility;
+        this.mailService = mailService;
     }
 
 
 
     public void inviteAdmin(InviteAdminDto inviteAdminDto,
-                            int userId){
+                            int userId) throws MessagingException {
         // First thing validate userId -> Is it belonging to maint user or not.
         User maint = userService.getUserById(userId);
         boolean isMaint = userService.isMaintUser(maint);
@@ -41,6 +45,7 @@ public class AdminService {
         // I need to save this in the user table.
         admin = userService.saveOrUpdateUser(admin);
         // After saving admin object in table we need to maild the admin regarding the invite -> That he want to join org or not.
+        mailService.sendInvitationEmailToAdmin(admin, maint);
     }
 
 }

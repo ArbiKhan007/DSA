@@ -14,7 +14,7 @@ public class InviteAdminDto {
     private String addressLine3;
     private String gender;
 
-    public InviteAdminDto(String name, String email, Long phoneNumber, int pincode, String addressLine1, String addressLine2, String addressLine3, String gender) {\
+    public InviteAdminDto(String name, String email, Long phoneNumber, int pincode, String addressLine1, String addressLine2, String addressLine3, String gender) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
