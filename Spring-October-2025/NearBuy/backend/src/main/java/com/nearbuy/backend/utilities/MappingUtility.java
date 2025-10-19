@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 public class MappingUtility {
 
     public User mapInviteAdminDtoToUserObject(InviteAdminDto inviteAdminDto){
+        StackOverflowError stackOverflowError = new StackOverflowError();
         User user = new User();
         user.setName(inviteAdminDto.getName());
         user.setEmail(inviteAdminDto.getEmail());
