@@ -1,6 +1,8 @@
 package com.nearbuy.backend.service;
 
 import com.nearbuy.backend.dto.InviteAdminDto;
+import com.nearbuy.backend.enums.UserState;
+import com.nearbuy.backend.enums.UserType;
 import com.nearbuy.backend.exceptions.NotAuthorizedException;
 import com.nearbuy.backend.models.User;
 import com.nearbuy.backend.utilities.MappingUtility;
@@ -46,6 +48,16 @@ public class AdminService {
         admin = userService.saveOrUpdateUser(admin);
         // After saving admin object in table we need to maild the admin regarding the invite -> That he want to join org or not.
         mailService.sendInvitationEmailToAdmin(admin, maint);
+    }
+
+
+    public void acceptInvite(int userId){
+       User admin =  userService.getUserById(userId);
+       if(admin == null || !admin.getUserType().equals(UserType.ADMIN.toString()) || admin.getStatus().equals(UserState.ACTIVE.toString())){
+           throw new NotAuthorizedException("User is not allowed to perform this operation");
+       }
+       admin.setStatus(UserState.ACTIVE.toString());
+       userService.saveOrUpdateUser(admin);
     }
 
 }

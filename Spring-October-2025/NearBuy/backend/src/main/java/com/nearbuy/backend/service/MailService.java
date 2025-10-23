@@ -28,8 +28,8 @@ public class MailService {
         // So, We need to configure emailId details in javamailsender object
         javaMailSender.setHost("smtp.gmail.com");
         javaMailSender.setPort(587); // genrally to send mail from our computer we require some port number so, the port number which we will use is 587
-        javaMailSender.setUsername("accioshoppingwebsite@gmail.com");// We will be sending email so, by what email our spring application will send mail to the users
-        javaMailSender.setPassword("relcfdwhahhcvokv"); // Password of the email.... It is app password, not actual password
+        javaMailSender.setUsername("arbikhan.008@gmail.com\n");// We will be sending email so, by what email our spring application will send mail to the users
+        javaMailSender.setPassword("qnbxqafzugensoho"); // Password of the email.... It is app password, not actual password
         Properties props = javaMailSender.getJavaMailProperties();
         props.put("mail.smtp.auth", "true"); // Our springboot api will connect gmail to send email via password so, mail.smtp.auth is true
         props.put("mail.smtp.starttls.enable", "true"); // This property we are setting for secure connection
@@ -37,7 +37,14 @@ public class MailService {
     }
 
     public TemplateEngine getTemplateEngine(){
-        return new TemplateEngine();
+        ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
+        templateResolver.setPrefix("templates/"); // Make sure this folder exists in resources
+        templateResolver.setSuffix(".html");
+        templateResolver.setTemplateMode("HTML");
+        templateResolver.setCharacterEncoding("UTF-8");
+        TemplateEngine templateEngine = new TemplateEngine();
+        templateEngine.setTemplateResolver(templateResolver);
+        return templateEngine;
     }
 
     public void sendInvitationEmailToAdmin(User admin, User maint) throws MessagingException {
@@ -48,6 +55,7 @@ public class MailService {
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
         // Whom i want to send the mail ? So, We need to set To
         mimeMessageHelper.setTo(admin.getEmail());
+        String acceptLink = "http://localhost:8080/api/v1/accept?us"+admin.getId();
         mimeMessageHelper.setSubject("NewBuy Admin Invitation");
 
         // To set the values for variables which we have defined inside the email template we use context library
@@ -55,7 +63,7 @@ public class MailService {
         context.setVariable("adminName", admin.getName());
         context.setVariable("invitedByName", maint.getName());
         context.setVariable("invitedByEmail", maint.getEmail());
-        context.setVariable("acceptLink" , "https://www.google.com/");
+        context.setVariable("acceptLink" , acceptLink);
         context.setVariable("rejectLink", "https://www.google.com/");
         TemplateEngine templateEngine = getTemplateEngine();
         String htmlTemplate = templateEngine.process("admin-invitation-template", context);

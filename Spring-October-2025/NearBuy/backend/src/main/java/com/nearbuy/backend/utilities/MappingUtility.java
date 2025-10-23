@@ -1,6 +1,7 @@
 package com.nearbuy.backend.utilities;
 
 import com.nearbuy.backend.dto.InviteAdminDto;
+import com.nearbuy.backend.dto.InviteUserDto;
 import com.nearbuy.backend.enums.UserState;
 import com.nearbuy.backend.enums.UserType;
 import com.nearbuy.backend.models.User;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class MappingUtility {
 
-    public User mapInviteAdminDtoToUserObject(InviteAdminDto inviteAdminDto){
+    public User mapInviteAdminDtoToUserObject(InviteUserDto inviteAdminDto){
         StackOverflowError stackOverflowError = new StackOverflowError();
         User user = new User();
         user.setName(inviteAdminDto.getName());

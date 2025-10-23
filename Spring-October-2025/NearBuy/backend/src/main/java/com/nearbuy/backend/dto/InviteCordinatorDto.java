@@ -1,10 +1,7 @@
 package com.nearbuy.backend.dto;
 
-import jakarta.persistence.Column;
-import lombok.*;
 
-
-public class InviteAdminDto extends InviteUserDto {
+public class InviteCordinatorDto extends InviteUserDto {
     private String name;
     private String email;
     private Long phoneNumber;
@@ -14,7 +11,10 @@ public class InviteAdminDto extends InviteUserDto {
     private String addressLine3;
     private String gender;
 
-    public InviteAdminDto(String name, String email, Long phoneNumber, int pincode, String addressLine1, String addressLine2, String addressLine3, String gender) {
+    public InviteCordinatorDto() {
+    }
+
+    public InviteCordinatorDto(String name, String email, Long phoneNumber, int pincode, String addressLine1, String addressLine2, String addressLine3, String gender) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -23,9 +23,6 @@ public class InviteAdminDto extends InviteUserDto {
         this.addressLine2 = addressLine2;
         this.addressLine3 = addressLine3;
         this.gender = gender;
-    }
-
-    public InviteAdminDto() {
     }
 
     public String getName() {
